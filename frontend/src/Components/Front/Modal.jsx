@@ -11,16 +11,11 @@ function Modal({ modalData, setModalData }) {
 				<div className="flex flex-col px-6 py-5 bg-gray-50 gap-2">
 					<div className="flex flex-col md:flex-row md:items-center gap-2">
 						<p className="font-semibold text-gray-700">Name:</p>
-						<div className="w-2/3 md:w-2/3 px-2 py-1">{modalData.name}</div>
+						<div className="w-2/3 md:w-2/3 px-2 py-1">{modalData.unit}</div>
 					</div>
 					<div className="flex flex-col justify-between">
 						<div className="w-2/3  px-2 py-1 flex flex-wrap flex-col gap-4">
-								{/* {
-									modalData.units.length > 0 ? modalData.units.map((unit, i) =>
-										<div key={i} >
-											<p className="text-gray-700">Book: {unit.unit}</p>
-										</div>) : 'No books'
-								} */}
+							{/* Taken by{modalData ? modalData.name : 'Available'} */}
 						</div>
 					</div>
 				</div>

@@ -18,6 +18,7 @@ function Front({ show }) {
         axios.get(`http://localhost:6174/front/main`)
             .then(res => setItems(res.data))
     }, [lastUpdate]);
+
     useEffect(() => {
         axios.get(`http://localhost:6174/front/unit`)
             .then(res => setUnits(res.data))
@@ -68,7 +69,7 @@ function Front({ show }) {
             <footer className='bg-gradient-to-l from-sky-800 to-sky-900 text-gray-50 flex justify-end px-6 py-4 shadow-sm shadow-blue-300 max-w-screen-2xl'>
                 <h3 className='font-semibold cursor-pointer'>Contacts</h3>
             </footer>
-            <Modal modalData={modalData} setModalData={setModalData} />
+            {/* <Modal modalData={modalData} setModalData={setModalData} /> */}
         </div>
     )
 }

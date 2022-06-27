@@ -2,7 +2,7 @@ const mysql = require("mysql");
 const connection = mysql.createConnection({ host: "localhost", user: "root", password: "", database: "exam_db" });
 
 
-const adminGet = (req, res) => {
+const adminGetAll = (req, res) => {
     connection.query(
         `SELECT * FROM main_table`,
         (err, result) => {
@@ -10,14 +10,22 @@ const adminGet = (req, res) => {
             res.send(result);
         });
 }
-const adminAddBox = () => {
 
-}
-const adminAddContainer = () => {
+const adminGetUnits = (req, res) => {
     connection.query(
-        `INSERT INTO main_table (name, category)
+        `SELECT * FROM unit_table`,
+        (err, result) => {
+            if (err) throw err;
+            res.send(result);
+        });
+}
+
+const adminAddItem = (req, res) => {
+    connection.query(
+        `INSERT INTO unit_table (unit, category)
         VALUES (?, ?)`,
-        [req.body.name, req.body.category],
+
+        [req.body.name ? req.body.name:'no name', 1],
         (err, result) => {
             if (err) throw err;
             res.send(result);
@@ -25,21 +33,30 @@ const adminAddContainer = () => {
 }
 
 
-//Thing
-
-const adminApproval = (req, res) => {
+const adminUpdateUnits = (req, res) => {
     connection.query(
-        `UPDATE main_table 
-        SET approval = ? 
-        WHERE main_id = ?`,
-        [req.body.approval, req.params.id],
+        `UPDATE unit_table 
+        SET category = ? 
+        WHERE unit_id = ?`,
+        [req.body.category, req.params.id],
         (err, result) => {
             if (err) throw err;
             res.send(result);
         });
 }
 
-const adminDeleteThing = (req, res) => {
+const adminDeleteUnit = (req, res) => {
+    connection.query(
+        `DELETE FROM unit_table 
+        WHERE unit_id = ?`,
+        [req.params.id],
+        (err, results) => {
+            if (err) { throw err; }
+            res.send(results);
+        });
+}
+
+const adminDeleteItem = (req, res) => {
     connection.query(
         `DELETE FROM main_table 
         WHERE main_id = ?`,
@@ -50,6 +67,4 @@ const adminDeleteThing = (req, res) => {
         });
 }
 
-
-
-module.exports = { adminGet, adminApproval, adminDeleteThing, adminAddBox, adminAddContainer }
+module.exports = { adminGetAll, adminGetUnits, adminDeleteUnit, adminUpdateUnits, adminDeleteItem, adminAddItem }

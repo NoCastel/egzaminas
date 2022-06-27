@@ -8,7 +8,6 @@ const { frontGetMain, frontGetUnit } = require("../controllers/front-controller"
 
 router.get("/main", frontGetMain);
 router.get("/unit", frontGetUnit);
-// router.get("/units/all", frontGetUnits);
 
 // router.post("/thing/:id", frontAddThing);
 // router.all('*', (req, res) => res.status(404).send('404 not found'));

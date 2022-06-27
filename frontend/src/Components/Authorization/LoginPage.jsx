@@ -13,13 +13,15 @@ function LoginPage() {
     const signIn = () => {
         axios.post('http://localhost:6174/login/sign-in', { user, pass })
             .then(res => {
-                if ('ok' === res.data.msg) {
+                if ('error' === res.data.msg) {
+                    setInvalid('invalid username or password')
+                } else if ('admin' === res.data.msg || 'boss' === res.data.msg) {
                     login(res.data.key);
                     navigate('/admin', { replace: true });
                 } else {
-                    setInvalid('invalid username or password')
+                    login(res.data.key);
+                    navigate('/backUser', { replace: true });
                 }
-                
             })
     }
     return (
