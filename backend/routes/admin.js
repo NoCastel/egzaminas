@@ -12,7 +12,6 @@ const { adminGet, adminApproval, adminDeleteThing, adminAddBox, adminAddContaine
 
 //Crud
 router.get("/", adminGet);
-router.get("/", adminGet);
 
 //Extra
 // router.put("/approval/:id", adminApproval);

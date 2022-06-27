@@ -58,7 +58,7 @@ function Front({ show }) {
                 <ul className="flex flex-col justify-between gap-1 rounded px-5 py-1">
                     {
                         units
-                            .filter(unit => search !== "" ? unit.unit.toLowerCase().includes(search.toLowerCase()) : unit)
+                            .filter(unit => search !== "" ? unit.unit.toLowerCase().includes(search.toLowerCase()) ||  (['drama','comedy', 'horror', 'novel', 'family'][unit.category-1]).toLowerCase().includes(search.toLowerCase()): unit)
                             .map(unit =>
                                 <ItemToFront key={unit.unit_id} item={items.filter(e => e.main_id === unit.main_id)[0]} unit={unit} setModalData={setModalData} />
                             )

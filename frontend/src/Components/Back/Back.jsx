@@ -22,17 +22,17 @@ function Back() {
     }, [lastUpdate]);
 
     //extra
-    useEffect(() => {
-        if (null === approval) { return; }
-        axios.put(`http://localhost:6174/admin/container`, approval, authConfig())
-            .then(res => setLastUpdate(Date.now()));
-    }, [createBox]);
+    // useEffect(() => {
+    //     if (null === approval) { return; }
+    //     axios.put(`http://localhost:6174/admin/container`, approval, authConfig())
+    //         .then(res => setLastUpdate(Date.now()));
+    // }, [createBox]);
 
-    useEffect(() => {
-        if (null === deleteThing) { return; }
-        axios.delete(`http://localhost:6174/admin/delete-thing/${deleteThing.main_id}`, authConfig())
-            .then(res => setLastUpdate(Date.now()));
-    }, [deleteThing]);
+    // useEffect(() => {
+    //     if (null === deleteThing) { return; }
+    //     axios.delete(`http://localhost:6174/admin/delete-thing/${deleteThing.main_id}`, authConfig())
+    //         .then(res => setLastUpdate(Date.now()));
+    // }, [deleteThing]);
 
 
 
