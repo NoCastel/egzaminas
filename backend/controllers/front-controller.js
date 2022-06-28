@@ -4,13 +4,6 @@ const connection = mysql.createConnection({ host: "localhost", user: "root", pas
 
 const frontGetMain = (req, res) => {
     connection.query(
-        // `SELECT main_table.main_id, main_table.name,
-        // GROUP_CONCAT(unit_table.unit_id, '<~>') AS unit_ids,
-        // GROUP_CONCAT(unit_table.unit, '<~>') AS units 
-        // FROM main_table 
-        // LEFT JOIN unit_table
-        // ON main_table.main_id = unit_table.main_id
-        // GROUP BY main_table.main_id`,
         `SELECT * FROM main_table`,
         (err, result) => {
             if (err) throw err;

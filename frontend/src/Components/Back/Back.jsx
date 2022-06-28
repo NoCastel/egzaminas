@@ -17,28 +17,37 @@ function Back() {
     const [deleteUnit, setDeleteUnit] = useState(null);
     const [deleteItem, setDeleteItem] = useState(null);
 
+    const [createData, setCreateData] = useState(null);
 
-    const [createData, setCreateData] = useState({});
-
-    // Read
+    // Items
     useEffect(() => {
-        axios.get(`http://localhost:6174/admin/all`, authConfig())
-            .then(res => setItems(res.data))
+        axios.get(`http://localhost:6174/admin/items`, authConfig())
+        .then(res => setItems(res.data))
     }, [lastUpdate]);
 
     useEffect(() => {
+        if (null === deleteItem) { return; }
+        axios.delete(`http://localhost:6174/admin/items/${deleteItem.main_id}`, authConfig())
+            .then(res => setLastUpdate(Date.now()));
+    }, [deleteItem])
+
+
+    //Units
+    useEffect(() => {
         axios.get(`http://localhost:6174/admin/units`, authConfig())
-            .then(res => {
-                setUnits(res.data)
-            });
+        .then(res => setUnits(res.data));
     }, [items]);
+    
+    useEffect(() => {
+        if (null === createData) { return; }
+        axios.post(`http://localhost:6174/admin/units`, createData, authConfig())
+            .then(res => setLastUpdate(Date.now()));
+    }, [createData]);
 
     useEffect(() => {
         if (null === updateCategory) { return; }
         axios.put(`http://localhost:6174/admin/units/${updateCategory.unit_id}`, updateCategory, authConfig())
-            .then(res => {
-                setLastUpdate(Date.now())
-            });
+            .then(res => setLastUpdate(Date.now()));
     }, [updateCategory]);
 
     useEffect(() => {
@@ -47,16 +56,7 @@ function Back() {
             .then(res => setLastUpdate(Date.now()));
     }, [deleteUnit])
 
-    useEffect(() => {
-        if (null === deleteItem) { return; }
-        axios.delete(`http://localhost:6174/admin/all/${deleteItem.main_id}`, authConfig())
-            .then(res => setLastUpdate(Date.now()));
-    }, [deleteItem])
 
-    useEffect(() => {
-        axios.post(`http://localhost:6174/admin/create`, createData, authConfig())
-            .then(res => setLastUpdate(Date.now()));
-    }, [createData]);
 
 
     return (

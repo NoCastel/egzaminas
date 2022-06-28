@@ -1,8 +1,8 @@
 const mysql = require("mysql");
 const connection = mysql.createConnection({ host: "localhost", user: "root", password: "", database: "exam_db" });
 
-
-const adminGetAll = (req, res) => {
+//Items
+const adminGetItems = (req, res) => {
     connection.query(
         `SELECT * FROM main_table`,
         (err, result) => {
@@ -11,6 +11,18 @@ const adminGetAll = (req, res) => {
         });
 }
 
+const adminDeleteItem = (req, res) => {
+    connection.query(
+        `DELETE FROM main_table 
+        WHERE main_id = ?`,
+        [req.params.id],
+        (err, results) => {
+            if (err) { throw err; }
+            res.send(results);
+        });
+}
+
+//Units
 const adminGetUnits = (req, res) => {
     connection.query(
         `SELECT * FROM unit_table`,
@@ -20,12 +32,11 @@ const adminGetUnits = (req, res) => {
         });
 }
 
-const adminAddItem = (req, res) => {
+const adminAddUnit = (req, res) => {
     connection.query(
         `INSERT INTO unit_table (unit, category)
         VALUES (?, ?)`,
-
-        [req.body.name ? req.body.name:'no name', 1],
+        [req.body.unit, req.body.category],
         (err, result) => {
             if (err) throw err;
             res.send(result);
@@ -33,7 +44,7 @@ const adminAddItem = (req, res) => {
 }
 
 
-const adminUpdateUnits = (req, res) => {
+const adminUpdateUnit = (req, res) => {
     connection.query(
         `UPDATE unit_table 
         SET category = ? 
@@ -56,15 +67,6 @@ const adminDeleteUnit = (req, res) => {
         });
 }
 
-const adminDeleteItem = (req, res) => {
-    connection.query(
-        `DELETE FROM main_table 
-        WHERE main_id = ?`,
-        [req.params.id],
-        (err, results) => {
-            if (err) { throw err; }
-            res.send(results);
-        });
-}
 
-module.exports = { adminGetAll, adminGetUnits, adminDeleteUnit, adminUpdateUnits, adminDeleteItem, adminAddItem }
+
+module.exports = { adminGetItems, adminDeleteItem, adminGetUnits, adminAddUnit, adminUpdateUnit, adminDeleteUnit }

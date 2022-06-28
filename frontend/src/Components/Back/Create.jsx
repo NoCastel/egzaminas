@@ -5,20 +5,20 @@ import axios from 'axios';
 
 function Create({ setCreateData }) {
 
-    const [name, setName] = useState('');
-    const [category, setCategory] = useState('');
+    const [unit, setUnit] = useState('');
+    const [category, setCategory] = useState(1);
 
     const buttonHandler = () => {
-        if (name.length > 0 && category > 0) {
-            setCreateData({ name, category });
-            setName('');
-            setCategory('');
+        if (unit.length > 0 && category > 0) {
+            setCreateData({ unit, category });
+            setUnit('');
+            setCategory(1);
         }
     }
     
     const inputHandler = (event, which) => {
         switch (which) {
-            case 'name': setName(event.target.value); break;
+            case 'unit': setUnit(event.target.value); break;
             case 'category': setCategory(event.target.value); break;
             default:
         }
@@ -34,8 +34,8 @@ console.log(category);
                             <h2 className="text-2xl font-semibold capitalize">Add idea</h2>
                             <div className="flex flex-col justify-between gap-2">
                                 <div className="flex flex-col justify-between gap-2 ">
-                                    <label className="font-semibold">Book name:</label>
-                                    <input type="text" className="w-2/3 px-1" onChange={event => inputHandler(event, 'name')} value={name} />
+                                    <label className="font-semibold">Book unit:</label>
+                                    <input type="text" className="w-2/3 px-1" onChange={event => inputHandler(event, 'unit')} value={unit} />
                                 </div>
                                 <select className="w-2/3 md:w-1/3 px-2 py-1 bg-white border border-gray-200 rounded shadow-sm appearance-none cursor-pointer" onChange={event => inputHandler(event, 'category')} value={category} >
                                     <option value="1">drama</option>

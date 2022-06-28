@@ -8,16 +8,17 @@ router.use(express.urlencoded({ limit: '50mb', extended: true }));
 router.use(express.json({ limit: '50mb' }));
 
 
-const { adminGetAll, adminGetUnits, adminUpdateUnits, adminDeleteUnit, adminDeleteItem, adminAddItem } = require("../controllers/admin-controller");
+const { adminGetItems, adminDeleteItem, adminGetUnits, adminAddUnit, adminUpdateUnit, adminDeleteUnit } = require("../controllers/admin-controller");
 
-//Crud
-router.get("/all", adminGetAll);
-router.delete("/all/:id", adminDeleteItem);
+//Items
+router.get("/items", adminGetItems);
+router.delete("/items/:id", adminDeleteItem);
 
+//Units
 router.get("/units", adminGetUnits);
-router.put("/units/:id", adminUpdateUnits);
+router.post("/units", adminAddUnit);
+router.put("/units/:id", adminUpdateUnit);
 router.delete("/units/:id", adminDeleteUnit);
-router.post("/create", adminAddItem);
 
 //Extra
 // router.put("/approval/:id", adminApproval);
