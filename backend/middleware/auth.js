@@ -1,8 +1,11 @@
 const mysql = require("mysql");
 const connection = mysql.createConnection({ host: "localhost", user: "root", password: "", database: "exam_db" });
 
+
 const uuid = require('uuid');
-const md5 = require("js-md5");
+const bcrypt = require('bcryptjs');
+
+
 
 const adminAuth = function (req, res, next) {
     connection.query(
@@ -47,20 +50,56 @@ const userAuth = function (req, res, next) {
 }
 
 
-const signIn = (req, res) => {
-    const key = uuid.v4();
+const signUp = async (req, res) => {
+    const salt = await bcrypt.genSalt();
+    const hashPass = await bcrypt.hash(req.body.password, salt);
     connection.query(
-        `UPDATE users
-		SET session = ?
-		WHERE name = ? AND pass = ?`,
-        [key, req.body.user, md5(req.body.pass)],
+        `INSERT IGNORE INTO main_table (name, password)
+        VALUES (?, ?)`, //ignore if there is a dublicate in the db
+        [req.body.name, hashPass],
         (err, result) => {
-            console.log(md5(req.body.pass))
             if (err) throw err;
-            !result.affectedRows ? res.send({ msg: 'error', key: '' }) : res.send({ msg: `${req.body.user}`, key });
-        });
+            if (result.insertId) { res.status(201).send('created') }
+            else { res.status(400).send('bad request') } 0
+        }
+    )
 }
 
+
+const signIn = (req, res) => {
+    connection.query(
+        `SELECT name, password
+        FROM main_table
+        WHERE name = ?`,
+        [req.body.name],
+        async (err, result) => {
+            if (err) throw err;
+
+            if (!result.length) {
+                return res.status(401).send('bad username or password');
+            }
+
+            try {
+                if (await bcrypt.compare(req.body.password, (result[0].password))) {
+                    connection.query(
+                        `UPDATE main_table
+                        SET session = ?
+                        WHERE name = ?`,
+                        [uuid.v4(), req.body.name],
+                        (err, result) => {
+                            if (err) throw err;
+                            res.status(200).send(`logged in as ${req.body.name}`);
+                        }
+                    )
+                } else {
+                    return res.status(401).send('bad username or password');
+                }
+            } catch {
+                res.status(500).send();
+            }
+
+        });
+}
 
 const loginCheck = (req, res) => {
     connection.query(
@@ -104,4 +143,4 @@ const userCheck = (req, res) => {
 }
 
 
-module.exports = { adminAuth, signIn, loginCheck, userAuth };
+module.exports = { adminAuth, signUp, signIn, loginCheck, userAuth };

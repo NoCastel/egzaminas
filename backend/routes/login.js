@@ -7,9 +7,10 @@ router.use(cors());
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
 
-const { signIn, loginCheck } = require("../middleware/auth");
+const { signUp, signIn, loginCheck } = require("../middleware/auth");
 
 
+router.post("/sign-up", signUp);
 router.post("/sign-in", signIn);
 router.get("/login-check", loginCheck);
 

@@ -19,7 +19,5 @@ app.use('/front', front);
 app.use('/login', login);
 app.use('/admin', adminAuth, admin);
 
-
-
 const port = 6174;
 app.listen(port, () => console.log(`Server listening on port: ${port}`));

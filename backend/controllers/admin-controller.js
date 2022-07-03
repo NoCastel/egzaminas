@@ -22,6 +22,7 @@ const adminDeleteItem = (req, res) => {
         });
 }
 
+
 //Units
 const adminGetUnits = (req, res) => {
     connection.query(
@@ -42,7 +43,6 @@ const adminAddUnit = (req, res) => {
             res.send(result);
         });
 }
-
 
 const adminUpdateUnit = (req, res) => {
     connection.query(
@@ -69,4 +69,4 @@ const adminDeleteUnit = (req, res) => {
 
 
 
-module.exports = { adminGetItems, adminDeleteItem, adminGetUnits, adminAddUnit, adminUpdateUnit, adminDeleteUnit }
+module.exports = { adminGetItems, adminDeleteItem, adminGetUnits, adminAddUnit, adminUpdateUnit, adminDeleteUnit };

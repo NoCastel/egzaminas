@@ -1,6 +1,4 @@
-import { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
-import axios from 'axios';
+import { useState from "react";
 
 
 function Create({ setCreateData }) {
@@ -15,7 +13,7 @@ function Create({ setCreateData }) {
             setCategory(1);
         }
     }
-    
+
     const inputHandler = (event, which) => {
         switch (which) {
             case 'unit': setUnit(event.target.value); break;
@@ -24,7 +22,6 @@ function Create({ setCreateData }) {
         }
     }
 
-console.log(category);
     return (
         <div className="container mx-auto bg-gray-200 w-5/6">
             <main className='container flex flex-col gap-4 p-1'>
